@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:GrafikaPs1"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800"
+        MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -18,7 +18,7 @@
             <TabItem Header="Paint">
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <RadioButton x:Name="LineToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="LineToggle_Checked">Line</RadioButton>
-                    <RadioButton x:Name="DrawToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="DrawToggle_Checked">Draw</RadioButton>
+                    <RadioButton x:Name="FreeHandToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="FreehandToggle_Checked">Freehand</RadioButton>
                     <RadioButton x:Name="TriangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="TriangleToggle_Checked">Triangle</RadioButton>
                     <RadioButton x:Name="QuadrangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="QuadrangleToggle_Checked">Quadrangle</RadioButton>
                     <RadioButton x:Name="ElipseToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="ElipseToggle_Checked">Elipse</RadioButton>
@@ -30,7 +30,7 @@
             </TabItem>
         </TabControl>
         
-        <Canvas x:Name="Canvas" Grid.Row="1" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove">
+        <Canvas x:Name="Canvas" Grid.Row="1">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>

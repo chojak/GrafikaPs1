@@ -23,7 +23,7 @@ namespace GrafikaPs1
     public enum DrawingMode
     {
         Line,
-        Draw,
+        Freehand,
         Triangle,
         Quatrangle,
         Elipse
@@ -32,6 +32,7 @@ namespace GrafikaPs1
     {
         public static DrawingMode DrawingMode;
         public static Color Color;
+        public static Point CurrentPoint;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,12 +40,30 @@ namespace GrafikaPs1
 
         protected void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            System.Diagnostics.Debug.WriteLine("click");
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                CurrentPoint.X = e.GetPosition(this).X;
+                CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
+            }
         }
 
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("move");
+            Point LastPoint;
 
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                LastPoint = CurrentPoint;
+                CurrentPoint.X = e.GetPosition(this).X;
+                CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
+                
+                if (DrawingMode == DrawingMode.Freehand)
+                {
+                    DrawingMethods.FreehandDraw(LastPoint, CurrentPoint, Color, Canvas);
+                }
+            }
         }
 
         protected void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -57,9 +76,9 @@ namespace GrafikaPs1
             DrawingMode = DrawingMode.Line;
         }
 
-        private void DrawToggle_Checked(object sender, RoutedEventArgs e)
+        private void FreehandToggle_Checked(object sender, RoutedEventArgs e)
         {
-            DrawingMode = DrawingMode.Draw;
+            DrawingMode = DrawingMode.Freehand;
         }
 
         private void TriangleToggle_Checked(object sender, RoutedEventArgs e)
