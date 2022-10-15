@@ -33,6 +33,9 @@ namespace GrafikaPs1
         public static DrawingMode DrawingMode;
         public static Color Color;
         public static Point CurrentPoint;
+
+        public static Point CurrentQuatrangleBasePoint;
+        public static Rectangle CurrentQuatrangle;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,6 +48,19 @@ namespace GrafikaPs1
             {
                 CurrentPoint.X = e.GetPosition(this).X;
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
+
+                if (DrawingMode == DrawingMode.Quatrangle)
+                {
+                    CurrentQuatrangle = new Rectangle();
+                    CurrentQuatrangleBasePoint = CurrentPoint;
+
+                    CurrentQuatrangle.Stroke = CurrentQuatrangle.Fill = new SolidColorBrush(Color);
+                    CurrentQuatrangle.Height = CurrentQuatrangle.Width = 1;
+                    
+                    Canvas.Children.Add(CurrentQuatrangle);
+                    Canvas.SetTop(CurrentQuatrangle, CurrentPoint.Y);
+                    Canvas.SetLeft(CurrentQuatrangle, CurrentPoint.X);
+                }
             }
         }
 
@@ -62,6 +78,16 @@ namespace GrafikaPs1
                 if (DrawingMode == DrawingMode.Freehand)
                 {
                     DrawingMethods.FreehandDraw(LastPoint, CurrentPoint, Color, Canvas);
+                }
+
+                if (DrawingMode == DrawingMode.Quatrangle)
+                {
+                    DrawingMethods.QuadrangleDraw(CurrentQuatrangleBasePoint, CurrentPoint, Color, CurrentQuatrangle, Canvas);
+                }
+
+                if (DrawingMode == DrawingMode.Elipse)
+                {
+                    //DrawingMethods.
                 }
             }
         }
@@ -94,6 +120,11 @@ namespace GrafikaPs1
         private void ElipseToggle_Checked(object sender, RoutedEventArgs e)
         {
             DrawingMode = DrawingMode.Elipse;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

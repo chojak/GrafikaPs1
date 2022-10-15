@@ -26,7 +26,9 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="Save">
-                
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SaveButton" Padding="4" Margin="3" Click="SaveButton_Click">Save</Button>
+                </StackPanel>
             </TabItem>
         </TabControl>
         
