@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -124,7 +125,27 @@ namespace GrafikaPs1
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)Canvas.RenderSize.Width,
+            (int)Canvas.RenderSize.Height, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+            rtb.Render(Canvas);
 
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPG file (*.jpg)| *.jpg";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (var fs = System.IO.File.OpenWrite(saveFileDialog.FileName))
+                {
+                    pngEncoder.Save(fs);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong", "Alert");
+                return;
+            }
         }
     }
 }
