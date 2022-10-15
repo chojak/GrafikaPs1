@@ -4,9 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrafikaPs1"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <TabControl x:Name="TabControl" Grid.Row="0">
+            <TabItem Header="Paint">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <RadioButton x:Name="LineToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="LineToggle_Checked">Line</RadioButton>
+                    <RadioButton x:Name="DrawToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="DrawToggle_Checked">Draw</RadioButton>
+                    <RadioButton x:Name="TriangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="TriangleToggle_Checked">Triangle</RadioButton>
+                    <RadioButton x:Name="QuadrangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="QuadrangleToggle_Checked">Quadrangle</RadioButton>
+                    <RadioButton x:Name="ElipseToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="ElipseToggle_Checked">Elipse</RadioButton>
+                    <xctk:ColorPicker x:Name="ColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged" Width="120" Padding="4" Margin="3" ></xctk:ColorPicker>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Save">
+                
+            </TabItem>
+        </TabControl>
+        
+        <Canvas x:Name="Canvas" Grid.Row="1" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove">
+            <Canvas.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
+            </Canvas.Background>
+        </Canvas>
     </Grid>
 </Window>
