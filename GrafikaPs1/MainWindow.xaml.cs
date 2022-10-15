@@ -37,18 +37,24 @@ namespace GrafikaPs1
 
         public static Point CurrentQuatrangleBasePoint;
         public static Rectangle CurrentQuatrangle;
+
+        public static Point CurrentTriangleBasePoint;
+        public static Polygon CurrentTriangle;
         public MainWindow()
         {
             InitializeComponent();
+            Color = Color.FromRgb(0, 0, 0);
+            ColorPicker.SelectedColor = Color;
         }
 
         protected void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("click");
+            //System.Diagnostics.Debug.WriteLine("click");
             if (e.ButtonState == MouseButtonState.Pressed)
             {
                 CurrentPoint.X = e.GetPosition(this).X;
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
+                System.Diagnostics.Debug.WriteLine("x: " + CurrentPoint.X + " y: " + CurrentPoint.Y);
 
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
@@ -62,12 +68,21 @@ namespace GrafikaPs1
                     Canvas.SetTop(CurrentQuatrangle, CurrentPoint.Y);
                     Canvas.SetLeft(CurrentQuatrangle, CurrentPoint.X);
                 }
+
+                if (DrawingMode == DrawingMode.Triangle)
+                {
+                    CurrentTriangle = new Polygon();
+                    CurrentTriangleBasePoint = CurrentPoint;
+
+                    CurrentTriangle.Stroke = CurrentTriangle.Fill = new SolidColorBrush(Color);
+                    Canvas.Children.Add(CurrentTriangle);
+                }
             }
         }
 
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("move");
+            //System.Diagnostics.Debug.WriteLine("move");
             Point LastPoint;
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -86,10 +101,16 @@ namespace GrafikaPs1
                     DrawingMethods.QuadrangleDraw(CurrentQuatrangleBasePoint, CurrentPoint, Color, CurrentQuatrangle, Canvas);
                 }
 
-                if (DrawingMode == DrawingMode.Elipse)
+                //if (DrawingMode == DrawingMode.Elipse)
+                //{
+                //    //DrawingMethods.
+                //}
+
+                if (DrawingMode == DrawingMode.Triangle)
                 {
-                    //DrawingMethods.
+                    DrawingMethods.TriangleDraw(CurrentTriangleBasePoint, CurrentPoint, CurrentTriangle, Canvas);
                 }
+
             }
         }
 

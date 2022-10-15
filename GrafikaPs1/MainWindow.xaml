@@ -32,6 +32,7 @@
         </TabControl>
 
         <Canvas x:Name="Canvas" Grid.Row="1" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" Background="White">
+            <Polygon Points="0,0 0,100 80,50 " Stroke="Black" Fill="Black" />
         </Canvas>
     </Grid>
 </Window>

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows;
 
 namespace GrafikaPs1
 {
@@ -46,6 +47,47 @@ namespace GrafikaPs1
                 Canvas.SetTop(Rectangle, CurrentPoint.Y);
                 Rectangle.Height = BasePoint.Y - CurrentPoint.Y;
             }
+        }
+        public static void TriangleDraw(System.Windows.Point BasePoint, System.Windows.Point CurrentPoint, System.Windows.Shapes.Polygon Triangle, Canvas Canvas)
+        {
+            Triangle.Points = new PointCollection();
+            Point a, b, c;
+            if (CurrentPoint.X > BasePoint.X)
+            {
+                if (CurrentPoint.Y > BasePoint.Y)
+                {
+                    a = CurrentPoint;
+                    b = new Point(BasePoint.X, CurrentPoint.Y);
+                    c = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, BasePoint.Y);
+         
+                }
+                if (CurrentPoint.Y < BasePoint.Y)
+                {
+                    a = BasePoint;
+                    b = new Point(CurrentPoint.X, BasePoint.Y);
+                    c = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, CurrentPoint.Y);
+                }
+            }
+
+            if (CurrentPoint.X < BasePoint.X)
+            {
+                if (CurrentPoint.Y > BasePoint.Y)
+                {
+                    a = CurrentPoint;
+                    b = new Point(BasePoint.X, CurrentPoint.Y);
+                    c = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, BasePoint.Y);
+                }
+                if (CurrentPoint.Y < BasePoint.Y)
+                {
+                    a = BasePoint;
+                    b = new Point(CurrentPoint.X, BasePoint.Y);
+                    c = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, CurrentPoint.Y);
+                }
+            }
+
+            Triangle.Points.Add(a);
+            Triangle.Points.Add(b);
+            Triangle.Points.Add(c);
         }
     }
 }
