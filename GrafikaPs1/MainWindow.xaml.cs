@@ -36,6 +36,12 @@ namespace GrafikaPs1
 
         public static Point CurrentQuatrangleBasePoint;
         public static Rectangle CurrentQuatrangle;
+
+        public static Point CurrentLineBasePoint;
+        public static Line CurrentLine;
+
+        public static Point CurrentEllipseBasePoint;
+        public static Ellipse CurrentEllipse;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +55,17 @@ namespace GrafikaPs1
                 CurrentPoint.X = e.GetPosition(this).X;
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
 
+                if (DrawingMode == DrawingMode.Line)
+                {
+                    CurrentLine = new Line();
+                    CurrentLineBasePoint = CurrentPoint;
+
+                    CurrentLine.Stroke = new SolidColorBrush(Color);
+                    CurrentLine.StrokeThickness = 2;
+                    Canvas.Children.Add(CurrentLine);
+                   
+                }
+                
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
                     CurrentQuatrangle = new Rectangle();
@@ -60,6 +77,19 @@ namespace GrafikaPs1
                     Canvas.Children.Add(CurrentQuatrangle);
                     Canvas.SetTop(CurrentQuatrangle, CurrentPoint.Y);
                     Canvas.SetLeft(CurrentQuatrangle, CurrentPoint.X);
+                }
+
+                if(DrawingMode == DrawingMode.Elipse)
+                {
+                    CurrentEllipse = new Ellipse();
+                    CurrentEllipseBasePoint = CurrentPoint;
+
+                    CurrentEllipse.Stroke = CurrentEllipse.Fill = new SolidColorBrush(Color);
+                    CurrentEllipse.Height = CurrentEllipse.Width = 1;
+
+                    Canvas.Children.Add(CurrentEllipse);
+                    Canvas.SetTop(CurrentEllipse, CurrentPoint.Y);
+                    Canvas.SetLeft(CurrentEllipse, CurrentPoint.X);
                 }
             }
         }
@@ -80,6 +110,11 @@ namespace GrafikaPs1
                     DrawingMethods.FreehandDraw(LastPoint, CurrentPoint, Color, Canvas);
                 }
 
+                if (DrawingMode == DrawingMode.Line)
+                {
+                    DrawingMethods.LineDraw(CurrentLineBasePoint, CurrentPoint, Color, CurrentLine, Canvas);
+                }
+
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
                     DrawingMethods.QuadrangleDraw(CurrentQuatrangleBasePoint, CurrentPoint, Color, CurrentQuatrangle, Canvas);
@@ -87,7 +122,7 @@ namespace GrafikaPs1
 
                 if (DrawingMode == DrawingMode.Elipse)
                 {
-                    //DrawingMethods.
+                    DrawingMethods.EllipseDraw(CurrentEllipseBasePoint, CurrentPoint, Color, CurrentEllipse, Canvas);
                 }
             }
         }
@@ -123,6 +158,11 @@ namespace GrafikaPs1
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextToggle_Checked(object sender, RoutedEventArgs e)
         {
 
         }

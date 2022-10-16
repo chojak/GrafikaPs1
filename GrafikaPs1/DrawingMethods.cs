@@ -25,6 +25,13 @@ namespace GrafikaPs1
 
             Canvas.Children.Add(line);
         }
+        public static void LineDraw(System.Windows.Point BasePoint, System.Windows.Point CurrentPoint, System.Windows.Media.Color Color, System.Windows.Shapes.Line Line, Canvas Canvas)
+        {
+            Line.X1= BasePoint.X;
+            Line.Y1= BasePoint.Y;
+            Line.X2= CurrentPoint.X;
+            Line.Y2= CurrentPoint.Y;
+        }
         public static void QuadrangleDraw(System.Windows.Point BasePoint, System.Windows.Point CurrentPoint, System.Windows.Media.Color Color, System.Windows.Shapes.Rectangle Rectangle, Canvas Canvas)
         {
             if (CurrentPoint.X - BasePoint.X >= 0)
@@ -45,6 +52,30 @@ namespace GrafikaPs1
             {
                 Canvas.SetTop(Rectangle, CurrentPoint.Y);
                 Rectangle.Height = BasePoint.Y - CurrentPoint.Y;
+            }
+        }
+
+        public static void EllipseDraw(System.Windows.Point BasePoint, System.Windows.Point CurrentPoint, System.Windows.Media.Color Color, System.Windows.Shapes.Ellipse Ellipse
+            , Canvas Canvas)
+        {
+            if (CurrentPoint.X - BasePoint.X >= 0)
+            {
+                Ellipse.Width = CurrentPoint.X - BasePoint.X;
+            }
+            else
+            {
+                Canvas.SetLeft(Ellipse, CurrentPoint.X);
+                Ellipse.Width = BasePoint.X - CurrentPoint.X;
+            }
+
+            if (CurrentPoint.Y - BasePoint.Y >= 0)
+            {
+                Ellipse.Height = CurrentPoint.Y - BasePoint.Y;
+            }
+            else
+            {
+                Canvas.SetTop(Ellipse, CurrentPoint.Y);
+                Ellipse.Height = BasePoint.Y - CurrentPoint.Y;
             }
         }
     }
