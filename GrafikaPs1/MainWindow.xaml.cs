@@ -28,7 +28,8 @@ namespace GrafikaPs1
         Freehand,
         Triangle,
         Quatrangle,
-        Elipse
+        Elipse,
+        Text
     }
 
     public enum Direction
