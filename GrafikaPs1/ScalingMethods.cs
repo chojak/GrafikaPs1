@@ -41,11 +41,43 @@ namespace GrafikaPs1
         }
         public static void TriangleScale(Polygon Triangle, Canvas Canvas, Direction Direction)
         {
+            switch (Direction)
+            {
+                case Direction.Top:
+                    break;
 
+                case Direction.Right:
+                    break;
+
+                case Direction.Bottom:
+                    break;
+
+                case Direction.Left:
+                    break;
+
+                default:
+                    break;
+            }
         }
-        public static void ElipseScale()
+        public static void ElipseScale(Ellipse Ellipse, Canvas Canvas, Direction Direction)
         {
+            switch (Direction)
+            {
+                case Direction.Top:
+                    break;
 
+                case Direction.Right:
+                    break;
+
+                case Direction.Bottom:
+                    break;
+
+                case Direction.Left:
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }
