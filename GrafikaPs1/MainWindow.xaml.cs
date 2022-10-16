@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,18 +43,24 @@ namespace GrafikaPs1
 
         public static Point CurrentEllipseBasePoint;
         public static Ellipse CurrentEllipse;
+
+        public static Point CurrentTriangleBasePoint;
+        public static Polygon CurrentTriangle;
         public MainWindow()
         {
             InitializeComponent();
+            Color = Color.FromRgb(0, 0, 0);
+            ColorPicker.SelectedColor = Color;
         }
 
         protected void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("click");
+            //System.Diagnostics.Debug.WriteLine("click");
             if (e.ButtonState == MouseButtonState.Pressed)
             {
                 CurrentPoint.X = e.GetPosition(this).X;
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
+                System.Diagnostics.Debug.WriteLine("x: " + CurrentPoint.X + " y: " + CurrentPoint.Y);
 
                 if (DrawingMode == DrawingMode.Line)
                 {
@@ -91,12 +98,24 @@ namespace GrafikaPs1
                     Canvas.SetTop(CurrentEllipse, CurrentPoint.Y);
                     Canvas.SetLeft(CurrentEllipse, CurrentPoint.X);
                 }
+            
+        
+
+                if (DrawingMode == DrawingMode.Triangle)
+                {
+                    CurrentTriangle = new Polygon();
+                    CurrentTriangleBasePoint = CurrentPoint;
+
+                    CurrentTriangle.Stroke = CurrentTriangle.Fill = new SolidColorBrush(Color);
+                    Canvas.Children.Add(CurrentTriangle);
+                }
             }
         }
 
+
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("move");
+            //System.Diagnostics.Debug.WriteLine("move");
             Point LastPoint;
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -124,6 +143,13 @@ namespace GrafikaPs1
                 {
                     DrawingMethods.EllipseDraw(CurrentEllipseBasePoint, CurrentPoint, Color, CurrentEllipse, Canvas);
                 }
+
+                if (DrawingMode == DrawingMode.Triangle)
+                {
+                    
+                    DrawingMethods.TriangleDraw(CurrentTriangleBasePoint, CurrentPoint, CurrentTriangle, Canvas);
+                }
+
             }
         }
 
@@ -159,7 +185,27 @@ namespace GrafikaPs1
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)Canvas.RenderSize.Width,
+            (int)Canvas.RenderSize.Height, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+            rtb.Render(Canvas);
 
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPG file (*.jpg)| *.jpg";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (var fs = System.IO.File.OpenWrite(saveFileDialog.FileName))
+                {
+                    pngEncoder.Save(fs);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong", "Alert");
+                return;
+            }
         }
 
         private void TextToggle_Checked(object sender, RoutedEventArgs e)
