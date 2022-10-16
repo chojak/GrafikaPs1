@@ -21,12 +21,12 @@ namespace GrafikaPs1
                     break;
 
                 case Direction.Right:
-                    if(Rectangle.Width > 2)
+                    if (Rectangle.Width > 2)
                         Rectangle.Width--;
                     break;
 
                 case Direction.Bottom:
-                    
+
                     if (Rectangle.Height > 2)
                         Rectangle.Height--;
                     break;
@@ -44,6 +44,7 @@ namespace GrafikaPs1
             List<Point> Points = Triangle.Points.ToList();
             Point tmp = new Point();
             Point tmp2 = new Point();
+            Point tmp3 = new Point();
 
             switch (Direction)
             {
@@ -60,41 +61,44 @@ namespace GrafikaPs1
                 case Direction.Bottom:
                     tmp = Triangle.Points[0];
                     tmp2 = Triangle.Points[2];
-
-                    Triangle.Points[0] = new Point(tmp.X, tmp.Y + 1);
-                    Triangle.Points[2] = new Point(tmp2.X, tmp2.Y + 1);
+                    tmp3 = Triangle.Points[1];
+                    Triangle.Points[0] = new Point(tmp.X + 1, tmp.Y - 1);
+                    Triangle.Points[1] = new Point(tmp3.X, tmp3.Y + 1);
+                    Triangle.Points[2] = new Point(tmp2.X - 1, tmp2.Y - 1);
                     break;
                 case Direction.Left:
                     tmp = Triangle.Points[0];
                     Triangle.Points[0] = new Point(tmp.X - 1, tmp.Y);
                     break;
 
+            }
         }
-        public static void EllipseScale(Ellipse Ellipse, Canvas Canvas, Direction Direction)
-        {
-            switch (Direction)
+            public static void EllipseScale(Ellipse Ellipse, Canvas Canvas, Direction Direction)
             {
-                case Direction.Top:
-                    Ellipse.Height++;
-                    break;
+                switch (Direction)
+                {
+                    case Direction.Top:
+                        Ellipse.Height++;
+                        break;
 
-                case Direction.Right:
-                    if (Ellipse.Width > 2)
-                        Ellipse.Width--;
-                    break;
+                    case Direction.Right:
+                        if (Ellipse.Width > 2)
+                            Ellipse.Width--;
+                        break;
 
-                case Direction.Bottom:
-                    if (Ellipse.Height > 2) 
-                        Ellipse.Height--;
-                    break;
+                    case Direction.Bottom:
+                        if (Ellipse.Height > 2)
+                            Ellipse.Height--;
+                        break;
 
-                case Direction.Left:
-                    Ellipse.Width++;
-                    break;
+                    case Direction.Left:
+                        Ellipse.Width++;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
         }
     }
-}
+
