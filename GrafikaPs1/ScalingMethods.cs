@@ -12,27 +12,25 @@ namespace GrafikaPs1
     {
         public static void QuadrangleScale(Rectangle Rectangle, Canvas Canvas, Direction Direction)
         {
-            double x = 0, y = 0;
             switch (Direction)
             {
                 case Direction.Top:
-                    y = Canvas.GetTop(Rectangle) - 1;
                     Rectangle.Height++;
-                    Canvas.SetTop(Rectangle, y);
                     break;
 
                 case Direction.Right:
-                    Rectangle.Width++;
+                    if(Rectangle.Width > 2)
+                        Rectangle.Width--;
                     break;
 
                 case Direction.Bottom:
-                    Rectangle.Height++;
+                    
+                    if (Rectangle.Height > 2)
+                        Rectangle.Height--;
                     break;
 
                 case Direction.Left:
-                    x = Canvas.GetLeft(Rectangle) - 1;
                     Rectangle.Width++;
-                    Canvas.SetLeft(Rectangle, x);
                     break;
 
                 default:
@@ -43,9 +41,31 @@ namespace GrafikaPs1
         {
 
         }
-        public static void ElipseScale()
+        public static void EllipseScale(Ellipse Ellipse, Canvas Canvas, Direction Direction)
         {
+            switch (Direction)
+            {
+                case Direction.Top:
+                    Ellipse.Height++;
+                    break;
 
+                case Direction.Right:
+                    if (Ellipse.Width > 2)
+                        Ellipse.Width--;
+                    break;
+
+                case Direction.Bottom:
+                    if (Ellipse.Height > 2) 
+                        Ellipse.Height--;
+                    break;
+
+                case Direction.Left:
+                    Ellipse.Width++;
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

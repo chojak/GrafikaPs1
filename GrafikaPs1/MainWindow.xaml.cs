@@ -99,6 +99,7 @@ namespace GrafikaPs1
 
                 if(DrawingMode == DrawingMode.Elipse)
                 {
+                    LastCreatedShape = CurrentEllipse = new Ellipse();
                     CurrentEllipse = new Ellipse();
                     CurrentEllipseBasePoint = CurrentPoint;
 
@@ -180,7 +181,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            ScalingMethods.EllipseScale(CurrentEllipse, Canvas, Direction.Top);
                         }
 
                         break;
@@ -194,7 +195,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            ScalingMethods.EllipseScale(CurrentEllipse, Canvas, Direction.Bottom);
                         }
                         break;
 
@@ -207,7 +208,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            ScalingMethods.EllipseScale(CurrentEllipse, Canvas, Direction.Left);
                         }
                         break;
 
@@ -220,7 +221,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            ScalingMethods.EllipseScale(CurrentEllipse, Canvas, Direction.Right);
                         }
                         break;
                 }
@@ -238,7 +239,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Top);
                         }
                         break;
 
@@ -251,7 +252,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Bottom);
                         }
                         break;
 
@@ -264,7 +265,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Left);
                         }
 
                         break;
@@ -278,7 +279,7 @@ namespace GrafikaPs1
 
                         if (LastCreatedShape is Ellipse)
                         {
-
+                            MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Right);
                         }
 
                         break;

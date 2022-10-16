@@ -86,20 +86,29 @@ namespace GrafikaPs1
 
             Triangle.Points = Points;
         }
-        public static void ElipseMove(Direction Direction)
+        public static void EllipseMove(Ellipse Ellipse, Canvas Canvas, Direction Direction)
         {
+            double x = 0, y = 0;
             switch (Direction)
             {
                 case Direction.Top:
+                    y = Canvas.GetTop(Ellipse) - 1;
+                    Canvas.SetTop(Ellipse, y);
                     break;
 
                 case Direction.Right:
+                    x = Canvas.GetLeft(Ellipse) + 1;
+                    Canvas.SetLeft(Ellipse, x);
                     break;
 
                 case Direction.Bottom:
+                    y = Canvas.GetTop(Ellipse) + 1;
+                    Canvas.SetTop(Ellipse, y);
                     break;
 
                 case Direction.Left:
+                    x = Canvas.GetLeft(Ellipse) - 1;
+                    Canvas.SetLeft(Ellipse, x);
                     break;
 
                 default:
