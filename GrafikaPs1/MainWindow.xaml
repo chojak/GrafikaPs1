@@ -22,6 +22,7 @@
                     <RadioButton x:Name="TriangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="TriangleToggle_Checked">Triangle</RadioButton>
                     <RadioButton x:Name="QuadrangleToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="QuadrangleToggle_Checked">Quadrangle</RadioButton>
                     <RadioButton x:Name="ElipseToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="ElipseToggle_Checked">Elipse</RadioButton>
+                    <RadioButton x:Name="TextToggle" Padding="4" Margin="3" Style="{StaticResource {x:Type ToggleButton}}" Checked="TextToggle_Checked">Text</RadioButton>
                     <xctk:ColorPicker x:Name="ColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged" Width="120" Padding="4" Margin="3" ></xctk:ColorPicker>
                 </StackPanel>
             </TabItem>

@@ -48,6 +48,12 @@ namespace GrafikaPs1
         public static Point CurrentQuatrangleBasePoint;
         public static Rectangle CurrentQuatrangle;
 
+        public static Point CurrentLineBasePoint;
+        public static Line CurrentLine;
+
+        public static Point CurrentEllipseBasePoint;
+        public static Ellipse CurrentEllipse;
+
         public static Point CurrentTriangleBasePoint;
         public static Polygon CurrentTriangle;
 
@@ -67,6 +73,17 @@ namespace GrafikaPs1
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
                 System.Diagnostics.Debug.WriteLine("x: " + CurrentPoint.X + " y: " + CurrentPoint.Y);
 
+                if (DrawingMode == DrawingMode.Line)
+                {
+                    CurrentLine = new Line();
+                    CurrentLineBasePoint = CurrentPoint;
+
+                    CurrentLine.Stroke = new SolidColorBrush(Color);
+                    CurrentLine.StrokeThickness = 2;
+                    Canvas.Children.Add(CurrentLine);
+                   
+                }
+                
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
                     LastCreatedShape = CurrentQuatrangle = new Rectangle();
@@ -80,6 +97,21 @@ namespace GrafikaPs1
                     Canvas.SetLeft(CurrentQuatrangle, CurrentPoint.X);
                 }
 
+                if(DrawingMode == DrawingMode.Elipse)
+                {
+                    CurrentEllipse = new Ellipse();
+                    CurrentEllipseBasePoint = CurrentPoint;
+
+                    CurrentEllipse.Stroke = CurrentEllipse.Fill = new SolidColorBrush(Color);
+                    CurrentEllipse.Height = CurrentEllipse.Width = 1;
+
+                    Canvas.Children.Add(CurrentEllipse);
+                    Canvas.SetTop(CurrentEllipse, CurrentPoint.Y);
+                    Canvas.SetLeft(CurrentEllipse, CurrentPoint.X);
+                }
+            
+        
+
                 if (DrawingMode == DrawingMode.Triangle)
                 {
                     LastCreatedShape = CurrentTriangle = new Polygon();
@@ -90,6 +122,7 @@ namespace GrafikaPs1
                 }
             }
         }
+
 
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -106,18 +139,24 @@ namespace GrafikaPs1
                     DrawingMethods.FreehandDraw(LastPoint, CurrentPoint, Color, Canvas);
                 }
 
+                if (DrawingMode == DrawingMode.Line)
+                {
+                    DrawingMethods.LineDraw(CurrentLineBasePoint, CurrentPoint, Color, CurrentLine, Canvas);
+                }
+
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
                     DrawingMethods.QuadrangleDraw(CurrentQuatrangleBasePoint, CurrentPoint, Color, CurrentQuatrangle, Canvas);
                 }
 
-                //if (DrawingMode == DrawingMode.Elipse)
-                //{
-                //    //DrawingMethods.
-                //}
+                if (DrawingMode == DrawingMode.Elipse)
+                {
+                    DrawingMethods.EllipseDraw(CurrentEllipseBasePoint, CurrentPoint, Color, CurrentEllipse, Canvas);
+                }
 
                 if (DrawingMode == DrawingMode.Triangle)
                 {
+                    
                     DrawingMethods.TriangleDraw(CurrentTriangleBasePoint, CurrentPoint, CurrentTriangle, Canvas);
                 }
 
@@ -300,6 +339,11 @@ namespace GrafikaPs1
                 MessageBox.Show("Something went wrong", "Alert");
                 return;
             }
+        }
+
+        private void TextToggle_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
