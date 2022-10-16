@@ -56,16 +56,15 @@ namespace GrafikaPs1
             {
                 if (CurrentPoint.Y > BasePoint.Y)
                 {
-                    a = CurrentPoint;
-                    b = new Point(BasePoint.X, CurrentPoint.Y);
-                    c = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, BasePoint.Y);
-         
+                    a = new Point(BasePoint.X, CurrentPoint.Y);
+                    b = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, BasePoint.Y);
+                    c = CurrentPoint;
                 }
                 if (CurrentPoint.Y < BasePoint.Y)
                 {
                     a = BasePoint;
-                    b = new Point(CurrentPoint.X, BasePoint.Y);
-                    c = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, CurrentPoint.Y);
+                    b = new Point((CurrentPoint.X - BasePoint.X) / 2 + BasePoint.X, CurrentPoint.Y);
+                    c = new Point(CurrentPoint.X, BasePoint.Y);
                 }
             }
 
@@ -74,14 +73,14 @@ namespace GrafikaPs1
                 if (CurrentPoint.Y > BasePoint.Y)
                 {
                     a = CurrentPoint;
-                    b = new Point(BasePoint.X, CurrentPoint.Y);
-                    c = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, BasePoint.Y);
+                    b = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, BasePoint.Y);
+                    c = new Point(BasePoint.X, CurrentPoint.Y);
                 }
                 if (CurrentPoint.Y < BasePoint.Y)
                 {
-                    a = BasePoint;
-                    b = new Point(CurrentPoint.X, BasePoint.Y);
-                    c = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, CurrentPoint.Y);
+                    a = new Point(CurrentPoint.X, BasePoint.Y);
+                    b = new Point((BasePoint.X - CurrentPoint.X) / 2 + CurrentPoint.X, CurrentPoint.Y);
+                    c = BasePoint;
                 }
             }
 

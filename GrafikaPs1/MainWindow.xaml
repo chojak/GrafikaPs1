@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GrafikaPs1"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        KeyDown="KeyDownEvent">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -32,7 +33,6 @@
         </TabControl>
 
         <Canvas x:Name="Canvas" Grid.Row="1" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" Background="White">
-            <Polygon Points="0,0 0,100 80,50 " Stroke="Black" Fill="Black" />
         </Canvas>
     </Grid>
 </Window>

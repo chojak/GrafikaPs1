@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,15 @@ namespace GrafikaPs1
         Quatrangle,
         Elipse
     }
+
+    public enum Direction
+    {
+        Top, 
+        Right,
+        Bottom,
+        Left
+    }
+
     public partial class MainWindow : Window
     {
         public static DrawingMode DrawingMode;
@@ -40,6 +50,8 @@ namespace GrafikaPs1
 
         public static Point CurrentTriangleBasePoint;
         public static Polygon CurrentTriangle;
+
+        public static Shape LastCreatedShape;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +61,6 @@ namespace GrafikaPs1
 
         protected void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("click");
             if (e.ButtonState == MouseButtonState.Pressed)
             {
                 CurrentPoint.X = e.GetPosition(this).X;
@@ -58,7 +69,7 @@ namespace GrafikaPs1
 
                 if (DrawingMode == DrawingMode.Quatrangle)
                 {
-                    CurrentQuatrangle = new Rectangle();
+                    LastCreatedShape = CurrentQuatrangle = new Rectangle();
                     CurrentQuatrangleBasePoint = CurrentPoint;
 
                     CurrentQuatrangle.Stroke = CurrentQuatrangle.Fill = new SolidColorBrush(Color);
@@ -71,7 +82,7 @@ namespace GrafikaPs1
 
                 if (DrawingMode == DrawingMode.Triangle)
                 {
-                    CurrentTriangle = new Polygon();
+                    LastCreatedShape = CurrentTriangle = new Polygon();
                     CurrentTriangleBasePoint = CurrentPoint;
 
                     CurrentTriangle.Stroke = CurrentTriangle.Fill = new SolidColorBrush(Color);
@@ -82,7 +93,6 @@ namespace GrafikaPs1
 
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("move");
             Point LastPoint;
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -111,6 +121,129 @@ namespace GrafikaPs1
                     DrawingMethods.TriangleDraw(CurrentTriangleBasePoint, CurrentPoint, CurrentTriangle, Canvas);
                 }
 
+            }
+        }
+        private void KeyDownEvent(object sender, KeyEventArgs e)
+        {
+            if (LastCreatedShape == null)
+                return;
+
+            if (Keyboard.IsKeyDown(Key.LeftShift))      // skalowanie
+            {
+                switch (e.Key)
+                {
+                    case Key.Up:
+                        if (LastCreatedShape is Rectangle)
+                            ScalingMethods.QuadrangleScale(CurrentQuatrangle, Canvas, Direction.Top);
+
+                        if (LastCreatedShape is Polygon)
+                            ScalingMethods.TriangleScale(CurrentTriangle, Canvas, Direction.Top);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+
+                        break;
+
+                    case Key.Down:
+                        if (LastCreatedShape is Rectangle)
+                            ScalingMethods.QuadrangleScale(CurrentQuatrangle, Canvas, Direction.Bottom);
+
+                        if (LastCreatedShape is Polygon)
+                            ScalingMethods.TriangleScale(CurrentTriangle, Canvas, Direction.Bottom);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+                        break;
+
+                    case Key.Left:
+                        if (LastCreatedShape is Rectangle)
+                            ScalingMethods.QuadrangleScale(CurrentQuatrangle, Canvas, Direction.Left);
+
+                        if (LastCreatedShape is Polygon)
+                            ScalingMethods.TriangleScale(CurrentTriangle, Canvas, Direction.Left);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+                        break;
+
+                    case Key.Right:
+                        if (LastCreatedShape is Rectangle)
+                            ScalingMethods.QuadrangleScale(CurrentQuatrangle, Canvas, Direction.Right);
+
+                        if (LastCreatedShape is Polygon)
+                            ScalingMethods.TriangleScale(CurrentTriangle, Canvas, Direction.Right);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                switch (e.Key)      // przesuwanie
+                {
+                    case Key.Up:
+                        if (LastCreatedShape is Rectangle)
+                            MovingMethods.QuadrangleMove(CurrentQuatrangle, Canvas, Direction.Top);
+
+                        if (LastCreatedShape is Polygon) 
+                            MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Top);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+                        break;
+
+                    case Key.Down:
+                        if (LastCreatedShape is Rectangle)
+                            MovingMethods.QuadrangleMove(CurrentQuatrangle, Canvas, Direction.Bottom);
+
+                        if (LastCreatedShape is Polygon)
+                            MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Bottom);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+                        break;
+
+                    case Key.Left:
+                        if (LastCreatedShape is Rectangle)
+                            MovingMethods.QuadrangleMove(CurrentQuatrangle, Canvas, Direction.Left);
+
+                        if (LastCreatedShape is Polygon)
+                            MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Left);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+
+                        break;
+
+                    case Key.Right:
+                        if (LastCreatedShape is Rectangle)
+                            MovingMethods.QuadrangleMove(CurrentQuatrangle, Canvas, Direction.Right);
+
+                        if (LastCreatedShape is Polygon)
+                            MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Right);
+
+                        if (LastCreatedShape is Ellipse)
+                        {
+
+                        }
+
+                        break;
+                }
             }
         }
 
