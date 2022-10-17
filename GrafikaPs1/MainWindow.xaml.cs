@@ -46,6 +46,8 @@ namespace GrafikaPs1
         public static Color Color;
         public static Point CurrentPoint;
 
+        public static TextBlock TextBlock;
+
         public static Point CurrentQuatrangleBasePoint;
         public static Rectangle CurrentQuatrangle;
 
@@ -111,8 +113,6 @@ namespace GrafikaPs1
                     Canvas.SetTop(CurrentEllipse, CurrentPoint.Y);
                     Canvas.SetLeft(CurrentEllipse, CurrentPoint.X);
                 }
-            
-        
 
                 if (DrawingMode == DrawingMode.Triangle)
                 {
@@ -122,9 +122,24 @@ namespace GrafikaPs1
                     CurrentTriangle.Stroke = CurrentTriangle.Fill = new SolidColorBrush(Color);
                     Canvas.Children.Add(CurrentTriangle);
                 }
+
+                if (DrawingMode == DrawingMode.Text)
+                {
+                    TextBlock = new TextBlock() {
+                        FontSize = 30,
+                        Foreground = new SolidColorBrush(Color),
+                    };
+
+                    //TextBlock.KeyDown += TextBlock_KeyDown;
+                    //TextBlock.Focusable = true;
+
+                    Canvas.SetTop(TextBlock, CurrentPoint.Y);
+                    Canvas.SetLeft(TextBlock, CurrentPoint.X);
+                    Canvas.Children.Add(TextBlock);
+                    //TextBlock.Focus();
+                }
             }
         }
-
 
         protected void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
@@ -137,35 +152,40 @@ namespace GrafikaPs1
                 CurrentPoint.Y = e.GetPosition(this).Y - MainGrid.RowDefinitions[0].ActualHeight;
                 
                 if (DrawingMode == DrawingMode.Freehand)
-                {
                     DrawingMethods.FreehandDraw(LastPoint, CurrentPoint, Color, Canvas);
-                }
 
                 if (DrawingMode == DrawingMode.Line)
-                {
                     DrawingMethods.LineDraw(CurrentLineBasePoint, CurrentPoint, Color, CurrentLine, Canvas);
-                }
 
                 if (DrawingMode == DrawingMode.Quatrangle)
-                {
                     DrawingMethods.QuadrangleDraw(CurrentQuatrangleBasePoint, CurrentPoint, Color, CurrentQuatrangle, Canvas);
-                }
 
                 if (DrawingMode == DrawingMode.Elipse)
-                {
                     DrawingMethods.EllipseDraw(CurrentEllipseBasePoint, CurrentPoint, Color, CurrentEllipse, Canvas);
-                }
 
                 if (DrawingMode == DrawingMode.Triangle)
-                {
-                    
                     DrawingMethods.TriangleDraw(CurrentTriangleBasePoint, CurrentPoint, CurrentTriangle, Canvas);
-                }
 
             }
         }
+        //private void KeyUpEvent(object sender, KeyEventArgs e)
+        //{
+        //    if (DrawingMode == DrawingMode.Text && TextBlock != null)
+        //    {
+        //        char c = e.Key.ToString()[0];
+
+        //        if (char.IsLetterOrDigit(c))
+        //            TextBlock.Text += c;
+        //    }
+        //}
         private void KeyDownEvent(object sender, KeyEventArgs e)
         {
+            if (DrawingMode == DrawingMode.Text && TextBlock != null && e.Key.ToString().Length == 1)
+            {
+                char c = e.Key.ToString()[0];
+                TextBlock.Text += c;
+            }
+
             if (LastCreatedShape == null)
                 return;
 
@@ -239,9 +259,7 @@ namespace GrafikaPs1
                             MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Top);
 
                         if (LastCreatedShape is Ellipse)
-                        {
                             MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Top);
-                        }
                         break;
 
                     case Key.Down:
@@ -252,9 +270,7 @@ namespace GrafikaPs1
                             MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Bottom);
 
                         if (LastCreatedShape is Ellipse)
-                        {
                             MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Bottom);
-                        }
                         break;
 
                     case Key.Left:
@@ -265,10 +281,7 @@ namespace GrafikaPs1
                             MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Left);
 
                         if (LastCreatedShape is Ellipse)
-                        {
                             MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Left);
-                        }
-
                         break;
 
                     case Key.Right:
@@ -279,10 +292,7 @@ namespace GrafikaPs1
                             MovingMethods.TriangleMove(CurrentTriangle, Canvas, Direction.Right);
 
                         if (LastCreatedShape is Ellipse)
-                        {
                             MovingMethods.EllipseMove(CurrentEllipse, Canvas, Direction.Right);
-                        }
-
                         break;
                 }
             }
@@ -317,7 +327,10 @@ namespace GrafikaPs1
         {
             DrawingMode = DrawingMode.Elipse;
         }
-
+        private void TextToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            DrawingMode = DrawingMode.Text;
+        }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)Canvas.RenderSize.Width,
@@ -343,9 +356,5 @@ namespace GrafikaPs1
             }
         }
 
-        private void TextToggle_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
